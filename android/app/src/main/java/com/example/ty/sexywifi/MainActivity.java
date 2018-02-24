@@ -8,12 +8,24 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
+    String name;
+    char sex;
+    Location loc;
+    char pref;
 
     private static final String[] INITIAL_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -25,13 +37,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        name = "Tin"; sex = 'M'; pref = 'M';
+
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         // Define a listener that responds to location updates
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
-                makeUseOfNewLocation("Tin", 'M', location, 'F');
+                loc = location;
+                makeUseOfNewLocation(name, sex, location, pref);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -56,13 +71,20 @@ public class MainActivity extends AppCompatActivity {
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
+        CallAPI apicaller = new CallAPI();
+        if(loc == null)
+            apicaller.doInBackground("http://95ac390b.ngrok.io/add_user", name + "," + sex + "," + 0.0 + "," + 0.0 + "," + pref);
+        else
+            apicaller.doInBackground("http://95ac390b.ngrok.io/add_user", name + "," + sex + "," + loc.getLatitude() + "," + loc.getLongitude() + "," + pref);
+
 
     }
 
     //post location to backend
     public void makeUseOfNewLocation(String name, char sex, Location location, char preference){
-        out.println(location.getLatitude() + ", " + location.getLongitude());
+        out.println("fuck" + location.getLatitude() + ", " + location.getLongitude());
+
     }
 
-
 }
+
