@@ -7,8 +7,10 @@ allUsers = {}
 
 @app.route("/getMatch", methods=['GET'])
 def homeRoute():
-	print(request.args.get("SSID"))
-
+	SSID = request.args.get("SSID")
+	name = request.args.get("name")
+	if name == None or SSID == None:
+		return ("Error with request, one or more fields are empty")
 	return "Hello World"
 
 
@@ -20,11 +22,14 @@ def add_user():
 	preference = request.form.get("preference")
 	SSID = request.form.get("SSID")
 	if name == None  or sex == None or location == None or preference == None or SSID == None:
-		return ("Error with request, one field is empty")
+		return ("Error with request, one ore more fields are empty")
 
 	if SSID in allUsers:
-		allUsers["SSID"]
-	return "Hello World #2"
+		allUsers[SSID].append({"name": name, "sex": sex, "location": location, "preference": preference})
+	else:
+		allUsers[SSID] = [{"name": name, "sex": sex, "location": location, "preference": preference}]
+	print(allUsers)
+	return("Successful Request")
 
 if __name__ == '__main__':
 	app.run(use_reloader=True, port=5000, threaded=True)
