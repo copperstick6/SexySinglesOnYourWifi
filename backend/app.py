@@ -11,7 +11,15 @@ def homeRoute():
 	name = request.args.get("name")
 	if name == None or SSID == None:
 		return ("Error with request, one or more fields are empty")
-	return "Hello World"
+
+	if len(allUsers) == 1:
+		return("There are no matches in your area.")
+	
+	i = 0
+	user = allUsers.keys()[i]
+	while user != SSID:
+		user = allUsers.keys()[i]
+	return("Your match is %s" % str(user))
 
 
 @app.route("/add_user", methods=['POST'])
