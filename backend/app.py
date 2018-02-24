@@ -22,7 +22,7 @@ def homeRoute():
 			i = 0
 			while allUsers[ssid_][i]["name"] == name:
 				i += 1
-			return("Your match it %s" % allUsers[ssid_][i]["name"])
+			return("Your match it %s" % allUsers[ssid_][i])
 
 
 
@@ -31,16 +31,17 @@ def homeRoute():
 def add_user():
 	name = request.form.get("name")
 	sex = request.form.get("sex")
-	location = request.form.get("location")
+	latitude = request.form.get("latitude")
+	longitude = request.form.get("longitude")
 	preference = request.form.get("preference")
 	SSID = request.form.get("SSID")
-	if name == None  or sex == None or location == None or preference == None or SSID == None:
+	if name == None  or sex == None or latitude == None or longitude == None or preference == None or SSID == None:
 		return ("Error with request, one ore more fields are empty")
 
 	if SSID in allUsers:
-		allUsers[SSID].append({"name": name, "sex": sex, "location": location, "preference": preference})
+		allUsers[SSID].append({"name": name, "sex": sex, "latitude": latitude, "longitude": longitude, "preference": preference})
 	else:
-		allUsers[SSID] = [{"name": name, "sex": sex, "location": location, "preference": preference}]
+		allUsers[SSID] = [{"name": name, "sex": sex, "latitude": latitude, "longitude": longitude, "preference": preference}]
 	print(allUsers)
 	return("Successful Request")
 
