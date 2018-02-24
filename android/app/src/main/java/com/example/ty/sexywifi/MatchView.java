@@ -15,6 +15,7 @@ public class MatchView extends View {
     private Paint mPaint;
 
     private Paint mCirclePaint;
+    private Paint mMatchName;
     private Paint mBackgroundPaint;
 
     public MatchView(Context context) {
@@ -42,7 +43,7 @@ public class MatchView extends View {
     protected void onDraw(Canvas canvas) {
 
 
-
+        drawCircle(canvas);
         super.onDraw(canvas);
     }
 
@@ -50,12 +51,10 @@ public class MatchView extends View {
         int w = getMeasuredWidth();
         int h = getMeasuredHeight();
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mCirclePaint.setColor(0xFFFFFFFF);
-        //mCirclePaint.setColor(0xFF4081);
+        mCirclePaint.setColor(Color.parseColor("0xFFFFFF"));
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBackgroundPaint.setColor(0xFFFFFFFF);
+        mBackgroundPaint.setColor(Color.BLUE);
 //        //Draw circle
-        canvas.drawCircle(w / 2, h / 2, MIN_RADIUS_VALUE, mCirclePaint);
         if (mAnimationOn) {
             if (mRadius >= MAX_RADIUS_VALUE)
                 mPaintGoBack = true;
@@ -66,6 +65,8 @@ public class MatchView extends View {
             mRadius = mPaintGoBack ? (mRadius - 2.0f) : (mRadius + 2.0f);
             invalidate();
         }
+        canvas.drawCircle(w / 2, h / 2, MIN_RADIUS_VALUE, mCirclePaint);
+
     }
 
     public void animateButton(boolean animate){
