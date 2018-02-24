@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
 
+import static android.graphics.Color.parseColor;
+
 /**
  * Created by ty on 2/24/18.
  */
@@ -41,7 +43,7 @@ public class MatchView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
+        canvas.drawColor(Color.WHITE);
 
         drawCircle(canvas);
         super.onDraw(canvas);
@@ -51,9 +53,9 @@ public class MatchView extends View {
         int w = getMeasuredWidth();
         int h = getMeasuredHeight();
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mCirclePaint.setColor(Color.parseColor("0xFFFFFF"));
+        mCirclePaint.setColor(Color.parseColor("#0080FF"));
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBackgroundPaint.setColor(Color.BLUE);
+        mBackgroundPaint.setColor(Color.parseColor("#5066B2FF"));
 //        //Draw circle
         if (mAnimationOn) {
             if (mRadius >= MAX_RADIUS_VALUE)
