@@ -221,7 +221,7 @@ public class MatchActivity extends AppCompatActivity {
     public void getPosition() {
         Log.d(TAG, "getPosition() TRACK THAT LADY YOU HOUND DOG");
         apicaller = new CallAPI(this);
-        apicaller.execute("get_position", mName);
+        apicaller.execute("get_position", mMatch);
     }
 
     //post location to backend
