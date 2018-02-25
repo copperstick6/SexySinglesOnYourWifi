@@ -29,6 +29,7 @@ import static java.lang.System.out;
 
 public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
+    CallAPI apicaller;
     String name;
     String sex;
     Location loc;
@@ -109,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
-        CallAPI apicaller = new CallAPI();
+        apicaller = new CallAPI();
         if(loc == null)
-            apicaller.execute(name, sex, "0.0", "0.0", "1000", pref);
+            apicaller.execute("add_user", name, sex, "0.0", "0.0", "1000", pref);
         else
             apicaller.execute(name, sex, loc.getLatitude() + "", loc.getLongitude() + "", "1000", pref);
     }
@@ -140,13 +141,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+//            apicaller.execute("add_user", name, sex, loc.getLatitude() + "", loc.getLongitude() + "", "1000", pref);
 
     }
 
     //post location to backend
     public void makeUseOfNewLocation(String name, String sex, Location location, String preference){
         out.println("fuck" + location.getLatitude() + ", " + location.getLongitude());
+        apicaller = new CallAPI();
+        apicaller.execute("update_position", name, location.getLatitude()+"", location.getLongitude()+"");
 
+        out.println("CHANGIN' FUCKIN' SEX");
+        apicaller = new CallAPI();
+        apicaller.execute("update_sex", name, "F");
+
+        out.println("CHANGIN' FUCKIN' SEX DRIVEEEEE");
+        apicaller = new CallAPI();
+        apicaller.execute("update_preference", name, "M");
+
+        out.println("POOOPSITION");
+        apicaller = new CallAPI();
+        apicaller.execute("get_position", name);
+
+        out.println("NEW SEXXXID");
+        apicaller = new CallAPI();
+        apicaller.execute("update_ssid", name, "69");
     }
 
 }
