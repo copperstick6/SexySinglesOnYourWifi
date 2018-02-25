@@ -34,4 +34,5 @@ public class ProfileActivity extends AppCompatActivity {
         match.setLayoutParams(params);
         mRelativeLayout.addView(match);
     }
+
 }

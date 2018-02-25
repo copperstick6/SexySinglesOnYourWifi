@@ -8,32 +8,32 @@
         <!--android:summary="@string/firstname_response"-->
         <!-- First Name-->
         <EditTextPreference
-            android:key="First Name"
+            android:key="firstname"
             android:title="First Name"
-            android:summary="@string/empty"
+            android:summary="@string/firstname_default"
             android:dialogTitle="@string/firstname_dialog" />
 
         <!-- Last Name-->
         <EditTextPreference
-            android:key="Last Name"
+            android:key="lastname"
             android:title="Last Name"
-            android:summary="@string/empty"
+            android:summary="@string/lastname_default"
             android:dialogTitle="@string/lastname_dialog" />
 
         <!--Sex-->
         <ListPreference
-            android:key="I Am:"
-            android:title="Sex"
-            android:summary="@string/empty"
+            android:key="sex"
+            android:title="I Am: "
+            android:summary="@string/sex_default"
             android:entries="@array/sex"
             android:entryValues="@array/sex"
             android:dialogTitle="@string/sex" />
 
         <!--Sex Preference-->
         <ListPreference
-            android:key="Show Me"
-            android:title="Preferences"
-            android:summary="@string/empty"
+            android:key="sex_preference"
+            android:title="Show Me:"
+            android:summary="@string/sex_preference_default"
             android:entries="@array/sex_preference"
             android:entryValues="@array/sex_preference"
             android:dialogTitle="@string/sex_preference" />

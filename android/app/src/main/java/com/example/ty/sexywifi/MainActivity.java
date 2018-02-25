@@ -4,7 +4,9 @@ package com.example.ty.sexywifi;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -58,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         // handles clicking on profile
         setProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 mFragmentTransaction.commit();
             }
         });
-        name = "Tin"; sex = "M"; pref = "F";
+        name = "Tin";
+        sex = "M";
+        pref = "F";
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -111,11 +114,12 @@ public class MainActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
         apicaller = new CallAPI();
-        if(loc == null)
+        if (loc == null)
             apicaller.execute("add_user", name, sex, "0.0", "0.0", "1000", pref);
         else
             apicaller.execute(name, sex, loc.getLatitude() + "", loc.getLongitude() + "", "1000", pref);
     }
+
 
     public static class PrefsFragment extends PreferenceFragment {
 
@@ -126,13 +130,8 @@ public class MainActivity extends AppCompatActivity {
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.profile);
 
-//            View view = super.onCreateView(inflater, container, savedInstanceState);
-//            view.setBackgroundColor(getResources().getColor(android.R.color.white));
-//
-//            //getView().setBackgroundColor(Color.BLACK);
-//
-//            return view;
         }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = super.onCreateView(inflater, container, savedInstanceState);
@@ -146,10 +145,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //post location to backend
-    public void makeUseOfNewLocation(String name, String sex, Location location, String preference){
+    public void makeUseOfNewLocation(String name, String sex, Location location, String preference) {
         out.println("fuck" + location.getLatitude() + ", " + location.getLongitude());
         apicaller = new CallAPI();
-        apicaller.execute("update_position", name, location.getLatitude()+"", location.getLongitude()+"");
+        apicaller.execute("update_position", name, location.getLatitude() + "", location.getLongitude() + "");
 
         out.println("CHANGIN' FUCKIN' SEX");
         apicaller = new CallAPI();

@@ -83,5 +83,9 @@
     <string name="lastname_dialog">Last Name</string>
     <string name="sex">I am:</string>
     <string name="sex_preference">Show Me :</string>
+    <string name="firstname_default">first name default</string>
+    <string name="lastname_default">last name default</string>
+    <string name="sex_default">sex default</string>
+    <string name="sex_preference_default">sex preference default</string>
 
 </resources>
