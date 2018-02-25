@@ -24,17 +24,84 @@ def homeRoute():
 				i += 1
 			return("Your match it %s" % allUsers[ssid_][i])
 
+@app.route("/updatePosition", methods = ['GET'])
+def updatePosition():
+	name = request.args.get("name")
+	latitude = request.args.get("latitude")
+	longitude = request.args.get("longitude")
+	if name == None or latitude == None or longitude == None:
+		return ("Error with request, one or more fields are empty")
+	print allUsers
+	for all_ssids in allUsers:
+		print all_ssids
+		for user in allUsers[all_ssids]:
+			print(user)
+			if user['name'] == name:
+				user['latitude'] = latitude
+				user['longitude'] = longitude
+				return("Successful request")
+	return("Name not found")
 
 
+@app.route("/getPosition", methods = ['GET'])
+def getPosition():
+	name = request.args.get("name")
+	if name == None:
+		return ("Error with request, one or more fields are empty")
+	for all_ssids in allUsers:
+		for user in allUsers[all_ssids]:
+			if user['name'] == name:
+				return("{latitude: " + str(user['latitude']) + ", longitude: " + str(user['longitude']) + "}")
+	return("Name not found")
 
-@app.route("/add_user", methods=['POST'])
+@app.route("/updateSSID", methods=['GET'])
+def updateSSID():
+	name = request.args.get("name")
+	SSID = request.args.get("SSID")
+	if name == None or SSID == None:
+		return ("Error with request, one or more fields are empty")
+	for all_ssids in allUsers:
+		for user in allUsers[all_ssids]:
+			if user['name'] == name:
+				user['SSID'] = SSID
+				return("Successful request")
+	return("Name not found")
+
+@app.route("/updatePreference", methods=['GET'])
+def updatePreferences():
+	name = request.args.get("name")
+	preference = request.args.get("preference")
+	if name == None or preference == None:
+		return ("Error with request, one or more fields are empty")
+	for all_ssids in allUsers:
+		for user in allUsers[all_ssids]:
+			if user['name'] == name:
+				user['preference'] = preference
+				return("Successful request")
+	return("Name not found")
+
+@app.route("/updateSex", methods=['GET'])
+def updateSex():
+	name = request.args.get("name")
+	sex = request.args.get("sex")
+	if name == None or sex == None:
+		return ("Error with request, one or more fields are empty")
+	for all_ssids in allUsers:
+		for user in allUsers[all_ssids]:
+			if user['name'] == name:
+				user['sex'] = sex
+				return("Successful request")
+	return("Name not found")
+
+
+@app.route("/add_user", methods=['GET'])
 def add_user():
-	name = request.form.get("name")
-	sex = request.form.get("sex")
-	latitude = request.form.get("latitude")
-	longitude = request.form.get("longitude")
-	preference = request.form.get("preference")
-	SSID = request.form.get("SSID")
+	name = request.args.get("name")
+	sex = request.args.get("sex")
+	latitude = request.args.get("latitude")
+	longitude = request.args.get("longitude")
+	preference = request.args.get("preference")
+	SSID = request.args.get("SSID")
 	if name == None  or sex == None or latitude == None or longitude == None or preference == None or SSID == None:
 		return ("Error with request, one ore more fields are empty")
 
