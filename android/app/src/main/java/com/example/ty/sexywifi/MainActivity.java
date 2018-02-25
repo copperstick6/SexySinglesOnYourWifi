@@ -80,6 +80,25 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = super.onCreateView(inflater, container, savedInstanceState);
             view.setBackgroundColor(getResources().getColor(android.R.color.white));
+
+            EditTextPreference fn = (EditTextPreference) findPreference("firstname");
+            EditTextPreference ln = (EditTextPreference) findPreference("lastname");
+            ListPreference sx = (ListPreference) findPreference("sex");
+            ListPreference sxpf = (ListPreference) findPreference("sex_preference");
+
+            if(fn.getText().equals(""))
+                fn.setSummary("none");
+            else
+                fn.setSummary(fn.getText());
+
+            if(fn.getText().equals(""))
+                ln.setSummary("none");
+            else
+                ln.setSummary(ln.getText());
+
+            sx.setSummary(sx.getValue());
+            sxpf.setSummary(sxpf.getValue());
+
             return view;
         }
 
@@ -93,7 +112,10 @@ public class MainActivity extends AppCompatActivity {
                 preference.setSummary(((ListPreference) preference).getValue());
             }
             if (key.equals("firstname") | key.equals("lastname")) {
-                preference.setSummary(((EditTextPreference) preference).getText());
+                if(((EditTextPreference) preference).getText().equals(""))
+                    preference.setSummary("none");
+                else
+                    preference.setSummary(((EditTextPreference) preference).getText());
             }
         }
 
