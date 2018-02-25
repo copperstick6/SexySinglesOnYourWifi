@@ -13,8 +13,8 @@ public class NetworkConnectivity extends Activity {
     private ConnectivityManager connectivityManager;
     private NetworkInfo activeNetworkInfo;
 
-    public NetworkConnectivity(){
-        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+    public NetworkConnectivity(ConnectivityManager cM){
+        connectivityManager = cM;
         activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
     };
 

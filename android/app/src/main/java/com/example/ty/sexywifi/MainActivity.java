@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import static java.lang.System.out;
 
 public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
+    NetworkConnectivity networkConnectivity;
     CallAPI apicaller;
     String name;
     String sex;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         name = "Tin"; sex = "M"; pref = "F";
+        networkConnectivity = new NetworkConnectivity((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE));
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             apicaller.execute("add_user", name, sex, "0.0", "0.0", "1000", pref);
         else
             apicaller.execute("add_user", name, sex, loc.getLatitude() + "", loc.getLongitude() + "", "1000", pref);
+
 
     }
 
