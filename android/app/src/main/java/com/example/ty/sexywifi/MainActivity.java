@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
             ListPreference sx = (ListPreference) findPreference("sex");
             ListPreference sxpf = (ListPreference) findPreference("sex_preference");
 
-            if(fn.getText().equals(""))
+            if(fn.getText() == null || fn.getText().equals(""))
                 fn.setSummary("none");
             else
                 fn.setSummary(fn.getText());
 
-            if(ln.getText().equals(""))
+            if(ln.getText() == null || ln.getText().equals(""))
                 ln.setSummary("none");
             else
                 ln.setSummary(ln.getText());
