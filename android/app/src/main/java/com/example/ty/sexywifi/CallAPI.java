@@ -14,10 +14,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class CallAPI extends AsyncTask<String, String, String>{ //
+public class CallAPI extends AsyncTask<String, String, String[]>{ //
 
-    public CallAPI(){
-
+    final MatchActivity match;
+    final String server = "http://231cd0aa.ngrok.io";
+    public CallAPI(final MatchActivity match){
+        this.match = match;
     }
 
     //http://95ac390b.ngrok.io/add_user?name=tytrusty&sex=F&latitude=90&longitude=100&SSID=1000&preference=M
@@ -27,36 +29,36 @@ public class CallAPI extends AsyncTask<String, String, String>{ //
         super.onPreExecute();
     }
 
-
     @Override
-    protected String doInBackground(String... params) {
+    protected String[] doInBackground(String... params) {
 
         String choice = params[0];
         String request = "";
         HttpURLConnection urlConnection = null;
         URL url = null;
+        String[] result = new String[2];
 
         if(choice.equals("add_user")){
-            request = "http://95ac390b.ngrok.io/add_user?name=" + params[1] + "&sex=" + params[2] + "&latitude=" + params[3]
+            request = server + "/add_user?name=" + params[1] + "&sex=" + params[2] + "&latitude=" + params[3]
                     + "&longitude=" + params[4] + "&SSID=" + params[5] + "&preference=" + params[6];
         }
         else if(choice.equals("update_position")){
-            request = "http://95ac390b.ngrok.io/updatePosition?name=" + params[1] + "&latitude=" + params[2] + "&longitude=" + params[3];
+            request = server + "/updatePosition?name=" + params[1] + "&latitude=" + params[2] + "&longitude=" + params[3];
         }
         else if(choice.equals("update_sex")){
-            request = "http://95ac390b.ngrok.io/updateSex?name=" + params[1] + "&sex=" + params[2];
+            request = server + "/updateSex?name=" + params[1] + "&sex=" + params[2];
         }
         else if(choice.equals("update_preference")){
-            request = "http://95ac390b.ngrok.io/updatePreference?name=" + params[1] + "&preference=" + params[2];
+            request = server + "/updatePreference?name=" + params[1] + "&preference=" + params[2];
         }
         else if(choice.equals("update_ssid")){
-            request = "http://95ac390b.ngrok.io/updateSSID?name=" + params[1] + "&SSID=" + params[2];
+            request = server + "/updateSSID?name=" + params[1] + "&SSID=" + params[2];
         }
         else if(choice.equals("get_position")){
-            request = "http://95ac390b.ngrok.io/getPosition?name=" + params[1];
+            request = server + "/getPosition?name=" + params[1];
         }
         else if(choice.equals("get_match")){
-            request = "http://95ac390b.ngrok.io/getMatch?SSID=" + params[1] + "&name=" + params[2];
+            request = server + "/getMatch?SSID=" + params[1] + "&name=" + params[2];
         }
 
         try {
@@ -81,6 +83,35 @@ public class CallAPI extends AsyncTask<String, String, String>{ //
             e.printStackTrace();
         }
 
-        return "";
+        result[0] = choice;
+        return result;
+    }
+
+    @Override
+    protected void onPostExecute(String[] results){
+        String choice = results[0];
+        if(choice.equals("add_user")){
+            match.updateDetails();
+        }
+        else if(choice.equals("update_position")){
+        }
+        else if(choice.equals("update_sex")){
+            match.setSexUpdated(true);
+            match.getMatch();
+        }
+        else if(choice.equals("update_preference")){
+            match.setPrefUpdated(true);
+            match.getMatch();
+        }
+        else if(choice.equals("update_ssid")){
+            // I aint doing this shit fuck off
+        }
+        else if(choice.equals("get_position")){
+            String latlng = results[1];
+            match.setPosition(latlng);
+        }
+        else if(choice.equals("get_match")){
+            match.setMatchName(results[1]);
+        }
     }
 }
