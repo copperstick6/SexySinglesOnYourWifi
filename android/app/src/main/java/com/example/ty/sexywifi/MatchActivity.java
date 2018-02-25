@@ -209,7 +209,7 @@ public class MatchActivity extends AppCompatActivity {
         // Update location
         Log.d(TAG, "makeUseOfNewLocation()");
         apicaller = new CallAPI(this);
-        apicaller.execute("update_position", name, location.getLatitude()+"", location.getLongitude()+"");
+        //apicaller.execute("update_position", name, location.getLatitude()+"", location.getLongitude()+"");
 
         mLatitude = location.getLatitude();
         mLongitude = location.getLongitude();
@@ -244,7 +244,6 @@ public class MatchActivity extends AppCompatActivity {
                     container.startAnimation(alphaOut);
                     container.setVisibility(View.GONE);
                     // isMeetViewVisible = false; -- REMOVE to allow prompt to appear again
-
                 }
             });
         }

@@ -1,6 +1,8 @@
 package com.example.ty.sexywifi;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -36,7 +38,13 @@ public class MatchView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLACK); // Color.parseColor("#D32F2F"));
+        Paint p=new Paint();
+        Rect imageRect = new Rect(0, 0, getWidth(), getHeight());
 
+
+        Bitmap b= BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        p.setColor(Color.RED);
+        canvas.drawBitmap(b, null, imageRect, p);
         drawCircle(canvas);
         drawMatchText(canvas);
         drawDistancetext(canvas);
