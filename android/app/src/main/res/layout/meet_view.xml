@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/notify_layout"
+    >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/background_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        >
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:maxHeight="128dp"
+            android:maxWidth="128dp"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"
+            android:src="@drawable/circle_icon" />
+        <!-- header text  -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name Here"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:lineSpacingExtra="4dp"
+            android:id="@+id/header"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/logo"
+            android:padding="10dp"
+            />
+
+
+        <!-- header divider  -->
+        <RelativeLayout
+            android:layout_below="@id/header"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:id="@+id/divider_header"
+            android:background="@color/colorAccent"
+            />
+
+        <!-- Body Text -->
+        <TextView
+            android:layout_below="@id/divider_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You've succesfully matched with your person. Prepare to be dissapointed. "
+            android:textColor="@color/darkDialog"
+            android:textSize="18sp"
+            android:lineSpacingExtra="4dp"
+            android:id="@+id/body"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            />
+
+        <!-- divider between body and button-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/divider_1"
+            android:layout_below="@id/body"
+            android:background="@color/textGrey"
+            />
+
+        <!-- confirm button -->
+        <Button
+            android:id="@+id/okay_button"
+            android:background="@android:color/transparent"
+            android:layout_below="@id/divider_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textColor="@color/darkBackground"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

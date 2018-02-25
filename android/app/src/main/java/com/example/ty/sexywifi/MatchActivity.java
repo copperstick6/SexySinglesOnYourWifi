@@ -15,12 +15,18 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class MatchActivity extends AppCompatActivity {
 
+    static final double MEET_THRESHOLD = 10.0;
     final String TAG = "MATCH";
     RelativeLayout mRelativeLayout;
     LocationManager locationManager;
@@ -161,8 +167,13 @@ public class MatchActivity extends AppCompatActivity {
 
             float[] results = new float[2];
             Location.distanceBetween(mLatitude, mLongitude, matchLatitude, matchLongitude, results);
-            match.setDistance(results[0]);
-            System.out.println("Distance: " + results[0]);
+            double distance = results[0];
+            match.setDistance(distance);
+            System.out.println("Distance: " + distance);
+            distance = 10;
+            if (distance <= MEET_THRESHOLD) {
+                showMeetView();
+            }
         }
 
         if (!isStopped) {
@@ -195,4 +206,30 @@ public class MatchActivity extends AppCompatActivity {
         Log.d(TAG, "mlAtitude: " + mLatitude + " mLongitude: " + mLongitude);
         Toast.makeText(getApplicationContext(), "mAlatitude: " + mLatitude + " mlongitude: " + mLongitude, Toast.LENGTH_SHORT).show();
     }
+
+    private void showMeetView() {
+        if(findViewById(android.R.id.content)
+                != null) { // making sure background is displayed
+            // Layouts
+            final View root = getLayoutInflater().inflate(R.layout.meet_view, (ViewGroup) findViewById(android.R.id.content)
+                    .getRootView(), true);
+            final RelativeLayout container = root.findViewById(R.id.notify_layout);
+
+            // Animations for satellite add and remove view
+            final Animation alphaIn      = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha_in);
+            final Animation alphaOut     = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha_out);
+            container.startAnimation(alphaIn); // initial anim in
+
+            // Button set up
+            Button button = root.findViewById(R.id.okay_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    container.startAnimation(alphaOut);
+                    container.setVisibility(View.GONE);
+                }
+            });
+        }
+    }
+
 }
