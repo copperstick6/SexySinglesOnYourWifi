@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
+
+    <Button
+        android:id="@+id/testBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="TestMode"
+        android:textColor="@color/colorPrimary"/>
 </RelativeLayout>

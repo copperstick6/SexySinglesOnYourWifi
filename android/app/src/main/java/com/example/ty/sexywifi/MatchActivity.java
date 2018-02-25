@@ -66,6 +66,13 @@ public class MatchActivity extends AppCompatActivity {
         WifiInfo info = wifiManager.getConnectionInfo ();
         ssid  = info.getSSID();
 
+        Button testBtn = findViewById(R.id.testBtn);
+        testBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                useFakeDistance = !useFakeDistance;
+            }
+        });
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         // Define a listener that responds to location updates
@@ -168,7 +175,10 @@ public class MatchActivity extends AppCompatActivity {
     double mLongitude = 0.0;
     double matchLatitude = 0.0;
     double matchLongitude = 0.0;
-    double fakeDistance = 100;
+    double fakeDistance = 50.0;
+
+    boolean useFakeDistance = true;
+
     public void setPosition(String latitude, String longitude) {
         if (latitude != null && longitude != null) {
             matchLatitude = Double.parseDouble(latitude);
@@ -180,11 +190,13 @@ public class MatchActivity extends AppCompatActivity {
             System.out.println("latitude distance shit");
             System.out.println(mLatitude + " " + mLongitude);
             System.out.println(matchLatitude + " " + matchLongitude);
-            Toast.makeText(getApplicationContext(), "mLat: " + mLatitude + " mLong: " + mLongitude + " matchLatitude: " + matchLatitude + " matchLongitude: " + matchLongitude, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "mLat: " + mLatitude + " mLong: " + mLongitude + " matchLatitude: " + matchLatitude + " matchLongitude: " + matchLongitude, Toast.LENGTH_LONG).show();
             double distance = results[0];
             System.out.println("distance: " + distance);
-//            fakeDistance -= 10.0;
-//            distance = fakeDistance;
+            if (useFakeDistance) {
+                fakeDistance -= 10.0;
+                distance = Math.max(fakeDistance, 0.0);
+            }
 
             match.setDistance(distance);
 
@@ -222,7 +234,7 @@ public class MatchActivity extends AppCompatActivity {
         mLatitude = location.getLatitude();
         mLongitude = location.getLongitude();
         Log.d(TAG, "mlAtitude: " + mLatitude + " mLongitude: " + mLongitude);
-        Toast.makeText(getApplicationContext(), "mAlatitude: " + mLatitude + " mlongitude: " + mLongitude, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "mAlatitude: " + mLatitude + " mlongitude: " + mLongitude, Toast.LENGTH_SHORT).show();
     }
 
     boolean isMeetViewVisible = false;
