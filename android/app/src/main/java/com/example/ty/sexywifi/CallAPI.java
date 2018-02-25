@@ -3,8 +3,10 @@ package com.example.ty.sexywifi;
 import android.os.AsyncTask;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -41,12 +43,16 @@ public class CallAPI extends AsyncTask<String, String, String>{ //
 
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
+            urlConnection.setRequestMethod("GET");
             urlConnection.connect();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            String content = "", line;
+            while((line = rd.readLine()) != null) {
+
+                content += line + "\n";
+            }
+            System.out.println("HTTP results: " + content);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
