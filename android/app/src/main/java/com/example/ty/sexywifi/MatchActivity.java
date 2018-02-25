@@ -169,7 +169,12 @@ public class MatchActivity extends AppCompatActivity {
             float[] results = new float[2];
             Location.distanceBetween(mLatitude, mLongitude, matchLatitude, matchLongitude, results);
 
+            System.out.println("latitude distance shit");
+            System.out.println(mLatitude + " " + mLongitude);
+            System.out.println(matchLatitude + " " + matchLongitude);
+            Toast.makeText(getApplicationContext(), "mLat: " + mLatitude + " mLong: " + mLongitude + " matchLatitude: " + matchLatitude + " matchLongitude: " + matchLongitude, Toast.LENGTH_LONG).show();
             double distance = results[0];
+            System.out.println("distance: " + distance);
 //            fakeDistance -= 10.0;
 //            distance = fakeDistance;
 

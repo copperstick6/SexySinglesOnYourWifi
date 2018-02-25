@@ -7,8 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextPaint;
 import android.view.View;
-
-import static android.graphics.Color.parseColor;
 import static com.example.ty.sexywifi.ColorHelper.numberToColor;
 
 /**
@@ -17,7 +15,7 @@ import static com.example.ty.sexywifi.ColorHelper.numberToColor;
 public class MatchView extends View {
     private Paint mCirclePaint;
     private Paint mBackgroundPaint;
-    private String matchName = "Finding match";
+    private String matchName = "Searching";
 
     public MatchView(Context context) {
         super(context);
@@ -37,7 +35,7 @@ public class MatchView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.parseColor("#D32F2F"));
+        canvas.drawColor(Color.BLACK); // Color.parseColor("#D32F2F"));
 
         drawCircle(canvas);
         drawMatchText(canvas);
