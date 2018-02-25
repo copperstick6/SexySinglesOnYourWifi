@@ -119,7 +119,7 @@ public class MatchView extends View {
         ColorHelper.triplet colorTriplet = numberToColor(Math.min(100., distance));
         mColor = getIntFromColor(colorTriplet.r, colorTriplet.g, colorTriplet. b, 0xFF000000);
         mBackgroundColor = getIntFromColor(colorTriplet.r, colorTriplet.g, colorTriplet. b, 0x50000000);
-        distanceStr = "Distance: " + distance + " m";
+        distanceStr = "Distance: " + (int)distance + " m";
     }
 
 }
