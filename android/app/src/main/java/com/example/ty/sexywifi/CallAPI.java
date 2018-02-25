@@ -4,16 +4,21 @@ import android.os.AsyncTask;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
-public class CallAPI extends AsyncTask<String, String, String> {
+public class CallAPI extends AsyncTask<String, String, String>{ //
 
     public CallAPI(){
-        //set context variables if required
+
     }
+
+    //http://95ac390b.ngrok.io/add_user?name=tytrusty&sex=F&latitude=90&longitude=100&SSID=1000&preference=M
 
     @Override
     protected void onPreExecute() {
@@ -23,38 +28,30 @@ public class CallAPI extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... params) {
+        String request = "http://95ac390b.ngrok.io/add_user?name=" + params[0] + "&sex=" + params[1] + "&latitude=" + params[2]
+                + "&longitude=" + params[3] + "&SSID=" + params[4] + "&preference=" + params[5];
 
-        String urlString = params[0]; // URL to call
-
-        String data = params[1]; //data to post
-
-        OutputStream out = null;
+        URL url = null;
         try {
-
-            URL url = new URL(urlString);
-
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            urlConnection.setDoOutput(true);
-
-            out = new BufferedOutputStream(urlConnection.getOutputStream());
-
-            BufferedWriter writer = new BufferedWriter (new OutputStreamWriter(out, "UTF-8"));
-
-            writer.write(data);
-
-            writer.flush();
-
-            writer.close();
-
-            out.close();
-
-            urlConnection.connect();
-
-        } catch (Exception e) {
-
-            System.out.println(e.getMessage());
+            url = new URL(request);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
-        return urlString;
+        HttpURLConnection urlConnection = null;
+
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            urlConnection.connect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //urlConnection.setDoOutput(true);
+
+        return "";
     }
 }

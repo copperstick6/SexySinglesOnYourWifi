@@ -15,6 +15,7 @@ import android.os.Bundle;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -23,9 +24,9 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
     String name;
-    char sex;
+    String sex;
     Location loc;
-    char pref;
+    String pref;
 
     private static final String[] INITIAL_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        name = "Tin"; sex = 'M'; pref = 'M';
+        name = "Tin"; sex = "M"; pref = "F";
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -73,15 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
         CallAPI apicaller = new CallAPI();
         if(loc == null)
-            apicaller.doInBackground("http://95ac390b.ngrok.io/add_user", name + "," + sex + "," + 0.0 + "," + 0.0 + "," + pref);
+            apicaller.execute(name, sex, "0.0", "0.0", "1000", pref);
         else
-            apicaller.doInBackground("http://95ac390b.ngrok.io/add_user", name + "," + sex + "," + loc.getLatitude() + "," + loc.getLongitude() + "," + pref);
-
+            apicaller.execute(name, sex, loc.getLatitude() + "", loc.getLongitude() + "", "1000", pref);
 
     }
 
     //post location to backend
-    public void makeUseOfNewLocation(String name, char sex, Location location, char preference){
+    public void makeUseOfNewLocation(String name, String sex, Location location, String preference){
         out.println("fuck" + location.getLatitude() + ", " + location.getLongitude());
 
     }
