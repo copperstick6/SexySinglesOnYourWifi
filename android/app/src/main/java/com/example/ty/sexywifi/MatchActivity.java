@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class MatchActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class MatchActivity extends AppCompatActivity {
     String mName;
     String mSex;
     String mPref;
-
+    MatchView match;
     Location loc;
     String ssid;
 
@@ -51,7 +52,7 @@ public class MatchActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         initProfile();
 
-        MatchView match = new MatchView(this);
+        match = new MatchView(this);
         match.setLayoutParams(params);
         mRelativeLayout.addView(match);
 
@@ -89,7 +90,7 @@ public class MatchActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
         apicaller = new CallAPI(this);
         if(loc == null)
@@ -144,7 +145,7 @@ public class MatchActivity extends AppCompatActivity {
     public void setMatchName(String name) {
         if (mMatch.equals("")) {
             mMatch = name;
-
+            match.setMatchName(name.split(" ")[0]);
             getPosition();
         }
     }
@@ -154,12 +155,15 @@ public class MatchActivity extends AppCompatActivity {
     double matchLatitude = 0.0;
     double matchLongitude = 0.0;
     public void setPosition(String latitude, String longitude) {
-        matchLatitude = Double.parseDouble(latitude);
-        matchLongitude = Double.parseDouble(longitude);
+        if (latitude != null && longitude != null) {
+            matchLatitude = Double.parseDouble(latitude);
+            matchLongitude = Double.parseDouble(longitude);
 
-        float[] results = new float[2];
-        Location.distanceBetween(mLatitude, mLongitude, matchLatitude, matchLongitude, results);
-        System.out.println("Distance: " + results[0]);
+            float[] results = new float[2];
+            Location.distanceBetween(mLatitude, mLongitude, matchLatitude, matchLongitude, results);
+            match.setDistance(results[0]);
+            System.out.println("Distance: " + results[0]);
+        }
 
         if (!isStopped) {
             final Handler handler = new Handler();
@@ -188,5 +192,7 @@ public class MatchActivity extends AppCompatActivity {
 
         mLatitude = location.getLatitude();
         mLongitude = location.getLongitude();
+        Log.d(TAG, "mlAtitude: " + mLatitude + " mLongitude: " + mLongitude);
+        Toast.makeText(getApplicationContext(), "mAlatitude: " + mLatitude + " mlongitude: " + mLongitude, Toast.LENGTH_SHORT).show();
     }
 }

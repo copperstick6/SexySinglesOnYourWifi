@@ -132,18 +132,17 @@ public class CallAPI extends AsyncTask<String, String, String[]>{ //
         }
         else if(choice.equals("get_match")){
             JSONObject jObject = null;
-            if (results[1].equals("No match found")) return;
+            if (results[1].equals("There are no matches in your area.")) return;
             String matchName = null;
             try {
                 System.out.println("results[1]:  " + results[1]);
                 jObject = new JSONObject(results[1]);
                 matchName = jObject.getString("name");
-
+                match.setMatchName(matchName);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            match.setMatchName(matchName);
         }
     }
 }

@@ -9,30 +9,20 @@ import android.text.TextPaint;
 import android.view.View;
 
 import static android.graphics.Color.parseColor;
+import static com.example.ty.sexywifi.ColorHelper.numberToColor;
 
 /**
  * Created by ty on 2/24/18.
  */
 public class MatchView extends View {
-    private Rect mRectangle;
-    private Paint mPaint;
-
     private Paint mCirclePaint;
-    private Paint mMatchName;
     private Paint mBackgroundPaint;
+    private String matchName = "Finding match";
 
     public MatchView(Context context) {
         super(context);
-        int x = 50;
-        int y = 50;
-        int sideLength = 200;
-
-        // create a rectangle that we'll draw later
-        mRectangle = new Rect(x, y, sideLength, sideLength);
-
-        // create the Paint and set its color
-        mPaint = new Paint();
-        mPaint.setColor(Color.GRAY);
+        mColor = Color.parseColor("#0080FF");
+        mBackgroundColor = Color.parseColor("#5066B2FF");
     }
 
     boolean mAnimationOn = true;
@@ -41,12 +31,22 @@ public class MatchView extends View {
     final float MAX_RADIUS_VALUE = 200.0f;
 
     float mRadius = 200.0f;
+    int mColor;
+    int mBackgroundColor;
+    String distanceStr = "Distance: n/a";
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.parseColor("#F50057"));
 
         drawCircle(canvas);
+        drawMatchText(canvas);
+        drawDistancetext(canvas);
+
+        super.onDraw(canvas);
+    }
+
+    private void drawMatchText(final Canvas canvas) {
         TextPaint textPaint = new TextPaint();
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(24 * getResources().getDisplayMetrics().density);
@@ -54,17 +54,27 @@ public class MatchView extends View {
         textPaint.setTextAlign(Paint.Align.CENTER);
         int xPos = (canvas.getWidth() / 2);
         int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
-        canvas.drawText("Ty", xPos, yPos, textPaint);
-        super.onDraw(canvas);
+        canvas.drawText(matchName, xPos, yPos, textPaint);
+    }
+
+    private void drawDistancetext(final Canvas canvas) {
+        TextPaint textPaint = new TextPaint();
+        textPaint.setAntiAlias(true);
+        textPaint.setTextSize(20 * getResources().getDisplayMetrics().density);
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        int xPos = (canvas.getWidth() / 2);
+        int yPos = (int) ((canvas.getHeight() / 1.25) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
+        canvas.drawText(distanceStr, xPos, yPos, textPaint);
     }
 
     private void drawCircle(final Canvas canvas) {
         int w = getMeasuredWidth();
         int h = getMeasuredHeight();
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mCirclePaint.setColor(Color.parseColor("#0080FF"));
+        mCirclePaint.setColor(mColor);
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBackgroundPaint.setColor(Color.parseColor("#5066B2FF"));
+        mBackgroundPaint.setColor(mBackgroundColor);
 //        //Draw circle
         if (mAnimationOn) {
             if (mRadius >= MAX_RADIUS_VALUE)
@@ -85,6 +95,26 @@ public class MatchView extends View {
             mRadius = MIN_RADIUS_VALUE;
         mAnimationOn = animate;
         invalidate();
+    }
+
+    public void setMatchName(String name) {
+        this.matchName = name;
+    }
+
+    public int getIntFromColor(int Red, int Green, int Blue, int mask){
+        Red = (Red << 16) & 0x00FF0000; //Shift red 16-bits and mask out other stuff
+        Green = (Green << 8) & 0x0000FF00; //Shift Green 8-bits and mask out other stuff
+        Blue = Blue & 0x000000FF; //Mask out anything not blue.
+
+        return mask | Red | Green | Blue; //0xFF000000 for 100% Alpha. Bitwise OR everything together.
+    }
+
+    public void setDistance(double distance) {
+        distance = 50;
+        ColorHelper.triplet colorTriplet = numberToColor(100);
+        mColor = getIntFromColor(colorTriplet.r, colorTriplet.g, colorTriplet. b, 0xFF000000);
+        mBackgroundColor = getIntFromColor(colorTriplet.r, colorTriplet.g, colorTriplet. b, 0x50000000);
+        distanceStr = "Distance: " + distance + " m";
     }
 
 }

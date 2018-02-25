@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         setProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
-//                startActivity(i);
-
                 // Display the fragment as the main content.
                 FragmentManager mFragmentManager = getFragmentManager();
                 FragmentTransaction mFragmentTransaction = mFragmentManager
@@ -69,10 +66,6 @@ public class MainActivity extends AppCompatActivity {
             view.setBackgroundColor(getResources().getColor(android.R.color.white));
             return view;
         }
-
-
-//            apicaller.execute("add_user", mName, mSex, loc.getLatitude() + "", loc.getLongitude() + "", "1000", mPref);
-
     }
 
 
