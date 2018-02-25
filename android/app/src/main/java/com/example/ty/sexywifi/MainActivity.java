@@ -3,13 +3,19 @@ package com.example.ty.sexywifi;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static class PrefsFragment extends PreferenceFragment {
+    public static class PrefsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -77,8 +83,33 @@ public class MainActivity extends AppCompatActivity {
             return view;
         }
 
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        /* get preference */
+            Preference preference = findPreference(key);
+
+        /* update summary */
+            if (key.equals("sex") || key.equals("sex_preference")) {
+                preference.setSummary(((ListPreference) preference).getValue());
+            }
+            if (key.equals("firstname") | key.equals("lastname")) {
+                preference.setSummary(((EditTextPreference) preference).getText());
+            }
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onPause() {
+            getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+            super.onPause();
+        }
+
     }
 
 
 }
-

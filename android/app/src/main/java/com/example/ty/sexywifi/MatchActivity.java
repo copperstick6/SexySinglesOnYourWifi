@@ -160,6 +160,7 @@ public class MatchActivity extends AppCompatActivity {
     double mLongitude = 0.0;
     double matchLatitude = 0.0;
     double matchLongitude = 0.0;
+    double fakeDistance = 100;
     public void setPosition(String latitude, String longitude) {
         if (latitude != null && longitude != null) {
             matchLatitude = Double.parseDouble(latitude);
@@ -167,10 +168,14 @@ public class MatchActivity extends AppCompatActivity {
 
             float[] results = new float[2];
             Location.distanceBetween(mLatitude, mLongitude, matchLatitude, matchLongitude, results);
+
             double distance = results[0];
+//            fakeDistance -= 10.0;
+//            distance = fakeDistance;
+
             match.setDistance(distance);
-            System.out.println("Distance: " + distance);
-            distance = 10;
+
+            // distance = 10;
             if (distance <= MEET_THRESHOLD) {
                 showMeetView();
             }
@@ -209,9 +214,10 @@ public class MatchActivity extends AppCompatActivity {
 
     boolean isMeetViewVisible = false;
     private void showMeetView() {
+        Log.d(TAG, "showMeetView()");
         if(!isMeetViewVisible && findViewById(android.R.id.content) != null) { // making sure background is displayed
             isMeetViewVisible = true;
-
+            System.out.println( " doing it ");
             // Layouts
             final View root = getLayoutInflater().inflate(R.layout.meet_view, (ViewGroup) findViewById(android.R.id.content)
                     .getRootView(), true);
