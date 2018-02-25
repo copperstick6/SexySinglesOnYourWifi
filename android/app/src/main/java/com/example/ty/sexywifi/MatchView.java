@@ -37,7 +37,7 @@ public class MatchView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.parseColor("#F50057"));
+        canvas.drawColor(Color.parseColor("#D32F2F"));
 
         drawCircle(canvas);
         drawMatchText(canvas);

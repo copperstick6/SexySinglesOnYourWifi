@@ -43,9 +43,19 @@ public class MainActivity extends AppCompatActivity {
                         .beginTransaction();
                 PrefsFragment mPrefsFragment = new PrefsFragment();
                 mFragmentTransaction.replace(android.R.id.content, mPrefsFragment);
+                mFragmentTransaction.addToBackStack(null);
                 mFragmentTransaction.commit();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
 
@@ -66,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             view.setBackgroundColor(getResources().getColor(android.R.color.white));
             return view;
         }
+
     }
 
 

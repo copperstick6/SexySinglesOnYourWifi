@@ -22,6 +22,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MatchActivity extends AppCompatActivity {
@@ -61,7 +62,6 @@ public class MatchActivity extends AppCompatActivity {
         match = new MatchView(this);
         match.setLayoutParams(params);
         mRelativeLayout.addView(match);
-
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService (Context.WIFI_SERVICE);
         WifiInfo info = wifiManager.getConnectionInfo ();
         ssid  = info.getSSID();
@@ -207,17 +207,22 @@ public class MatchActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "mAlatitude: " + mLatitude + " mlongitude: " + mLongitude, Toast.LENGTH_SHORT).show();
     }
 
+    boolean isMeetViewVisible = false;
     private void showMeetView() {
-        if(findViewById(android.R.id.content)
-                != null) { // making sure background is displayed
+        if(!isMeetViewVisible && findViewById(android.R.id.content) != null) { // making sure background is displayed
+            isMeetViewVisible = true;
+
             // Layouts
             final View root = getLayoutInflater().inflate(R.layout.meet_view, (ViewGroup) findViewById(android.R.id.content)
                     .getRootView(), true);
             final RelativeLayout container = root.findViewById(R.id.notify_layout);
 
             // Animations for satellite add and remove view
-            final Animation alphaIn      = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha_in);
-            final Animation alphaOut     = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha_out);
+            final Animation alphaIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha_in);
+            final Animation alphaOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha_out);
+
+            TextView textViewName = container.findViewById(R.id.header);
+            textViewName.setText(mMatch);
             container.startAnimation(alphaIn); // initial anim in
 
             // Button set up
@@ -227,6 +232,8 @@ public class MatchActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     container.startAnimation(alphaOut);
                     container.setVisibility(View.GONE);
+                    // isMeetViewVisible = false; -- REMOVE to allow prompt to appear again
+
                 }
             });
         }
