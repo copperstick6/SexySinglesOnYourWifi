@@ -54,7 +54,7 @@ public class MatchActivity extends AppCompatActivity {
         match.setLayoutParams(params);
         mRelativeLayout.addView(match);
 
-        name = "Don Degrees"; sex = "M"; pref = "M";
+        name = "XanTheMan"; sex = "M"; pref = "M";
 
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService (Context.WIFI_SERVICE);
         WifiInfo info = wifiManager.getConnectionInfo ();
@@ -138,8 +138,9 @@ public class MatchActivity extends AppCompatActivity {
         }
     }
 
-    public void setPosition(String res) {
-        System.out.println("setPosition: res"  + res);
+    public void setPosition(String latitude, String longitude) {
+        System.out.println("setPosition: res"  + latitude + " , " + longitude);
+        getPosition();
     }
 
     // Get your matches position

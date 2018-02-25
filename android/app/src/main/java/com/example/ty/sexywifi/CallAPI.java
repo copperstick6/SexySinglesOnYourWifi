@@ -2,6 +2,9 @@ package com.example.ty.sexywifi;
 
 import android.os.AsyncTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -67,12 +70,13 @@ public class CallAPI extends AsyncTask<String, String, String[]>{ //
             e.printStackTrace();
         }
 
+        String content = "";
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
             BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String content = "", line;
+            String line;
             while((line = rd.readLine()) != null) {
 
                 content += line + "\n";
@@ -84,6 +88,7 @@ public class CallAPI extends AsyncTask<String, String, String[]>{ //
         }
 
         result[0] = choice;
+        result[1] = content;
         return result;
     }
 
@@ -94,6 +99,7 @@ public class CallAPI extends AsyncTask<String, String, String[]>{ //
             match.updateDetails();
         }
         else if(choice.equals("update_position")){
+           // UPDATE POSITION  N/A
         }
         else if(choice.equals("update_sex")){
             match.setSexUpdated(true);
@@ -107,11 +113,39 @@ public class CallAPI extends AsyncTask<String, String, String[]>{ //
             // I aint doing this shit fuck off
         }
         else if(choice.equals("get_position")){
-            String latlng = results[1];
-            match.setPosition(latlng);
+            JSONObject jObject = null;
+
+            String latitude = null;
+            String longitude = null;
+            try {
+                jObject = new JSONObject(results[1]);
+                latitude = jObject.getString("latitude");
+                longitude = jObject.getString("longitude");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            match.setPosition(latitude, longitude);
         }
         else if(choice.equals("get_match")){
-            match.setMatchName(results[1]);
+            JSONObject jObject = null;
+            if (results[1].equals("No match found")) return;
+            String matchName = null;
+            try {
+                System.out.println("results[1]:  " + results[1]);
+                jObject = new JSONObject(results[1]);
+                matchName = jObject.getString("name");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            match.setMatchName(matchName);
         }
     }
 }
