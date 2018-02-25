@@ -30,16 +30,40 @@ public class CallAPI extends AsyncTask<String, String, String>{ //
 
     @Override
     protected String doInBackground(String... params) {
-        String request = "http://95ac390b.ngrok.io/add_user?name=" + params[0] + "&sex=" + params[1] + "&latitude=" + params[2]
-                + "&longitude=" + params[3] + "&SSID=" + params[4] + "&preference=" + params[5];
 
+        String choice = params[0];
+        String request = "";
+        HttpURLConnection urlConnection = null;
         URL url = null;
+
+        if(choice.equals("add_user")){
+            request = "http://95ac390b.ngrok.io/add_user?name=" + params[1] + "&sex=" + params[2] + "&latitude=" + params[3]
+                    + "&longitude=" + params[4] + "&SSID=" + params[5] + "&preference=" + params[6];
+        }
+        else if(choice.equals("update_position")){
+            request = "http://95ac390b.ngrok.io/updatePosition?name=" + params[1] + "&latitude=" + params[2] + "&longitude=" + params[3];
+        }
+        else if(choice.equals("update_sex")){
+            request = "http://95ac390b.ngrok.io/updateSex?name=" + params[1] + "&sex=" + params[2];
+        }
+        else if(choice.equals("update_preference")){
+            request = "http://95ac390b.ngrok.io/updatePreference?name=" + params[1] + "&preference=" + params[2];
+        }
+        else if(choice.equals("update_ssid")){
+            request = "http://95ac390b.ngrok.io/updateSSID?name=" + params[1] + "&SSID=" + params[2];
+        }
+        else if(choice.equals("get_position")){
+            request = "http://95ac390b.ngrok.io/getPosition?name=" + params[1];
+        }
+        else if(choice.equals("get_match")){
+            request = "http://95ac390b.ngrok.io/getMatch?SSID=" + params[1] + "&name=" + params[2];
+        }
+
         try {
             url = new URL(request);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        HttpURLConnection urlConnection = null;
 
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -56,7 +80,6 @@ public class CallAPI extends AsyncTask<String, String, String>{ //
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //urlConnection.setDoOutput(true);
 
         return "";
     }
