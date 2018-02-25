@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             else
                 fn.setSummary(fn.getText());
 
-            if(fn.getText().equals(""))
+            if(ln.getText().equals(""))
                 ln.setSummary("none");
             else
                 ln.setSummary(ln.getText());
