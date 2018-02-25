@@ -1,10 +1,15 @@
 package com.example.ty.sexywifi;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.preference.PreferenceFragment;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,9 +20,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-        Button infoBtn = findViewById(R.id.buttonSetInfo);
+        Button setProfileBtn = findViewById(R.id.buttonSetProfile);
         Button findMatchBtn = findViewById(R.id.buttonFindMatch);
 
+//        handles clicking on match
         findMatchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -25,5 +31,49 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+
+        // handles clicking on profile
+        setProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+//                startActivity(i);
+
+                // Display the fragment as the main content.
+                FragmentManager mFragmentManager = getFragmentManager();
+                FragmentTransaction mFragmentTransaction = mFragmentManager
+                        .beginTransaction();
+                PrefsFragment mPrefsFragment = new PrefsFragment();
+                mFragmentTransaction.replace(android.R.id.content, mPrefsFragment);
+                mFragmentTransaction.commit();
+            }
+        });
+
+    }
+
+    public static class PrefsFragment extends PreferenceFragment {
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // Load the preferences from an XML resource
+            addPreferencesFromResource(R.xml.profile);
+
+//            View view = super.onCreateView(inflater, container, savedInstanceState);
+//            view.setBackgroundColor(getResources().getColor(android.R.color.white));
+//
+//            //getView().setBackgroundColor(Color.BLACK);
+//
+//            return view;
+        }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = super.onCreateView(inflater, container, savedInstanceState);
+            view.setBackgroundColor(getResources().getColor(android.R.color.white));
+            return view;
+        }
     }
 }

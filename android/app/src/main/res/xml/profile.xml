@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory>
+        <!--User Settings-->
+        android:title="@string/dialog_based_preferences">
+
+        <!-- First Name-->
+        <EditTextPreference
+            android:key="First Name"
+            android:title="First Name Title" />
+        <!--android:summary="@string/summary_edittext_preference"-->
+        <!--android:dialogTitle="@string/dialog_title_edittext_preference" />-->
+
+        <!-- Last Name-->
+        <EditTextPreference
+            android:key="Last Name"
+            android:title="Last Name Title" />
+        <!--android:summary="@string/summary_edittext_preference"-->
+        <!--android:dialogTitle="@string/dialog_title_edittext_preference" />-->
+
+        <!--Sex-->
+        <ListPreference
+            android:key="I Am:"
+            android:title="Sex Title" />
+        <!--android:summary="@string/summary_list_preference"-->
+        <!--android:entries="@array/entries_list_preference"-->
+        <!--android:entryValues="@array/entryvalues_list_preference"-->
+        <!--android:dialogTitle="@string/dialog_title_list_preference" />-->
+
+        <!--Sex Preference-->
+        <ListPreference
+            android:key="Show Me"
+            android:title="Preference Title" />
+        <!--android:summary="@string/summary_list_preference"-->
+        <!--android:entries="@array/entries_list_preference"-->
+        <!--android:entryValues="@array/entryvalues_list_preference"-->
+        <!--android:dialogTitle="@string/dialog_title_list_preference" />-->
+
+    </PreferenceCategory>
+    <!--<resources>-->
+
+        <!--<string-array name="sex">-->
+            <!--<item>Male</item>-->
+            <!--<item>Female</item>-->
+        <!--</string-array>-->
+
+        <!--<string-array name="sex_preference">-->
+            <!--<item>Men</item>-->
+            <!--<item>Women</item>-->
+        <!--</string-array>-->
+    <!--</resources>-->
+
+</PreferenceScreen>
