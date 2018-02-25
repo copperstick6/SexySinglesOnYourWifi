@@ -4,37 +4,39 @@
         <!--User Settings-->
         android:title="@string/dialog_based_preferences">
 
+        <!--todo-->
+        <!--android:summary="@string/firstname_response"-->
         <!-- First Name-->
         <EditTextPreference
             android:key="First Name"
-            android:title="First Name Title" />
-        <!--android:summary="@string/summary_edittext_preference"-->
-        <!--android:dialogTitle="@string/dialog_title_edittext_preference" />-->
+            android:title="First Name"
+            android:summary="@string/empty"
+            android:dialogTitle="@string/firstname_dialog" />
 
         <!-- Last Name-->
         <EditTextPreference
             android:key="Last Name"
-            android:title="Last Name Title" />
-        <!--android:summary="@string/summary_edittext_preference"-->
-        <!--android:dialogTitle="@string/dialog_title_edittext_preference" />-->
+            android:title="Last Name"
+            android:summary="@string/empty"
+            android:dialogTitle="@string/lastname_dialog" />
 
         <!--Sex-->
         <ListPreference
             android:key="I Am:"
-            android:title="Sex Title" />
-        <!--android:summary="@string/summary_list_preference"-->
-        <!--android:entries="@array/entries_list_preference"-->
-        <!--android:entryValues="@array/entryvalues_list_preference"-->
-        <!--android:dialogTitle="@string/dialog_title_list_preference" />-->
+            android:title="Sex"
+            android:summary="@string/empty"
+            android:entries="@array/sex"
+            android:entryValues="@array/sex"
+            android:dialogTitle="@string/sex" />
 
         <!--Sex Preference-->
         <ListPreference
             android:key="Show Me"
-            android:title="Preference Title" />
-        <!--android:summary="@string/summary_list_preference"-->
-        <!--android:entries="@array/entries_list_preference"-->
-        <!--android:entryValues="@array/entryvalues_list_preference"-->
-        <!--android:dialogTitle="@string/dialog_title_list_preference" />-->
+            android:title="Preferences"
+            android:summary="@string/empty"
+            android:entries="@array/sex_preference"
+            android:entryValues="@array/sex_preference"
+            android:dialogTitle="@string/sex_preference" />
 
     </PreferenceCategory>
     <!--<resources>-->
