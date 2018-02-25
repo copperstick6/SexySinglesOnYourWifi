@@ -138,10 +138,11 @@ public class CallAPI extends AsyncTask<String, String, String[]>{ //
                 System.out.println("results[1]:  " + results[1]);
                 jObject = new JSONObject(results[1]);
                 matchName = jObject.getString("name");
-                match.setMatchName(matchName);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            match.setMatchName(matchName);
+
 
         }
     }

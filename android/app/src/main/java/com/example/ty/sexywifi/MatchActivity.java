@@ -149,7 +149,15 @@ public class MatchActivity extends AppCompatActivity {
     }
 
     public void setMatchName(String name) {
-        if (mMatch.equals("")) {
+        if (name == null) {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getMatch();
+                }
+            }, 2000);
+        } else if (mMatch.equals("")) {
             mMatch = name;
             match.setMatchName(name.split(" ")[0]);
             getPosition();
