@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.TextPaint;
 import android.view.View;
 
 import static android.graphics.Color.parseColor;
@@ -43,9 +44,17 @@ public class MatchView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(Color.parseColor("#F50057"));
 
         drawCircle(canvas);
+        TextPaint textPaint = new TextPaint();
+        textPaint.setAntiAlias(true);
+        textPaint.setTextSize(24 * getResources().getDisplayMetrics().density);
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        int xPos = (canvas.getWidth() / 2);
+        int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
+        canvas.drawText("Ty", xPos, yPos, textPaint);
         super.onDraw(canvas);
     }
 
