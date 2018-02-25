@@ -2,24 +2,20 @@ package com.example.ty.sexywifi;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Paint;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import static java.lang.System.out;
 
 public class MatchActivity extends AppCompatActivity {
 
@@ -27,10 +23,11 @@ public class MatchActivity extends AppCompatActivity {
     RelativeLayout mRelativeLayout;
     LocationManager locationManager;
     CallAPI apicaller;
-    String name;
-    String sex;
+    String mName;
+    String mSex;
+    String mPref;
+
     Location loc;
-    String pref;
     String ssid;
 
     String mMatch = "";
@@ -54,7 +51,7 @@ public class MatchActivity extends AppCompatActivity {
         match.setLayoutParams(params);
         mRelativeLayout.addView(match);
 
-        name = "XanTheMan"; sex = "M"; pref = "M";
+        mName = "XanTheMan"; mSex = "M"; mPref = "M";
 
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService (Context.WIFI_SERVICE);
         WifiInfo info = wifiManager.getConnectionInfo ();
@@ -67,7 +64,7 @@ public class MatchActivity extends AppCompatActivity {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
                 loc = location;
-                makeUseOfNewLocation(name, sex, location, pref);
+                makeUseOfNewLocation(mName, mSex, location, mPref);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -94,14 +91,21 @@ public class MatchActivity extends AppCompatActivity {
 
         apicaller = new CallAPI(this);
         if(loc == null)
-            apicaller.execute("add_user", name, sex, "0.0", "0.0", ssid, pref);
+            apicaller.execute("add_user", mName, mSex, "0.0", "0.0", ssid, mPref);
         else
-            apicaller.execute("add_user", name, sex, loc.getLatitude() + "", loc.getLongitude() + "", ssid, pref);
+            apicaller.execute("add_user", mName, mSex, loc.getLatitude() + "", loc.getLongitude() + "", ssid, mPref);
     }
 
     boolean sexUpdated = false;
     boolean prefUpdated = false;
 
+    public void initProfile() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mName = sp.getString("firstname", "NA") + " " + sp.getString("lastname", "NA");
+
+        //mSex;
+        //mPref;
+    }
 
     public void setSexUpdated(boolean state) {
         sexUpdated = state;
@@ -116,9 +120,9 @@ public class MatchActivity extends AppCompatActivity {
         Log.d(TAG, "updateDetails()");
 
         apicaller = new CallAPI(this);
-        apicaller.execute("update_sex", name, sex);
+        apicaller.execute("update_sex", mName, mSex);
         apicaller = new CallAPI(this);
-        apicaller.execute("update_preference", name, pref);
+        apicaller.execute("update_preference", mName, mPref);
     }
 
     // After information sent to server, get the match
@@ -126,7 +130,7 @@ public class MatchActivity extends AppCompatActivity {
         if (!sexUpdated || !prefUpdated) return;
         Log.d(TAG, "getMatch()");
         apicaller = new CallAPI(this);
-        apicaller.execute("get_match", ssid, name);
+        apicaller.execute("get_match", ssid, mName);
     }
 
     public void setMatchName(String name) {
@@ -147,7 +151,7 @@ public class MatchActivity extends AppCompatActivity {
     public void getPosition() {
         Log.d(TAG, "getPosition() TRACK THAT LADY YOU HOUND DOG");
         apicaller = new CallAPI(this);
-        apicaller.execute("get_position", name);
+        apicaller.execute("get_position", mName);
     }
 
     //post location to backend
@@ -158,6 +162,6 @@ public class MatchActivity extends AppCompatActivity {
         apicaller.execute("update_position", name, location.getLatitude()+"", location.getLongitude()+"");
         // Update SSID if changed, not gonna be relevant lol
 //        apicaller = new CallAPI();
-//        apicaller.execute("update_ssid", name, ssid);
+//        apicaller.execute("update_ssid", mName, ssid);
     }
 }

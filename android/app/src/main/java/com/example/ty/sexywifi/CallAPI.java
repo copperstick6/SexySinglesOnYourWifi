@@ -19,14 +19,12 @@ import java.net.URLConnection;
 
 public class CallAPI extends AsyncTask<String, String, String[]>{ //
 
-    final MatchActivity match;
-    final String server = "http://231cd0aa.ngrok.io";
+    private final MatchActivity match;
+    private final String server = "http://ec2-18-222-63-40.us-east-2.compute.amazonaws.com/";
     public CallAPI(final MatchActivity match){
         this.match = match;
     }
-
-    //http://95ac390b.ngrok.io/add_user?name=tytrusty&sex=F&latitude=90&longitude=100&SSID=1000&preference=M
-
+    
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -42,26 +40,26 @@ public class CallAPI extends AsyncTask<String, String, String[]>{ //
         String[] result = new String[2];
 
         if(choice.equals("add_user")){
-            request = server + "/add_user?name=" + params[1] + "&sex=" + params[2] + "&latitude=" + params[3]
+            request = server + "/add_user?mName=" + params[1] + "&mSex=" + params[2] + "&latitude=" + params[3]
                     + "&longitude=" + params[4] + "&SSID=" + params[5] + "&preference=" + params[6];
         }
         else if(choice.equals("update_position")){
-            request = server + "/updatePosition?name=" + params[1] + "&latitude=" + params[2] + "&longitude=" + params[3];
+            request = server + "/updatePosition?mName=" + params[1] + "&latitude=" + params[2] + "&longitude=" + params[3];
         }
         else if(choice.equals("update_sex")){
-            request = server + "/updateSex?name=" + params[1] + "&sex=" + params[2];
+            request = server + "/updateSex?mName=" + params[1] + "&mSex=" + params[2];
         }
         else if(choice.equals("update_preference")){
-            request = server + "/updatePreference?name=" + params[1] + "&preference=" + params[2];
+            request = server + "/updatePreference?mName=" + params[1] + "&preference=" + params[2];
         }
         else if(choice.equals("update_ssid")){
-            request = server + "/updateSSID?name=" + params[1] + "&SSID=" + params[2];
+            request = server + "/updateSSID?mName=" + params[1] + "&SSID=" + params[2];
         }
         else if(choice.equals("get_position")){
-            request = server + "/getPosition?name=" + params[1];
+            request = server + "/getPosition?mName=" + params[1];
         }
         else if(choice.equals("get_match")){
-            request = server + "/getMatch?SSID=" + params[1] + "&name=" + params[2];
+            request = server + "/getMatch?SSID=" + params[1] + "&mName=" + params[2];
         }
 
         try {
@@ -139,7 +137,7 @@ public class CallAPI extends AsyncTask<String, String, String[]>{ //
             try {
                 System.out.println("results[1]:  " + results[1]);
                 jObject = new JSONObject(results[1]);
-                matchName = jObject.getString("name");
+                matchName = jObject.getString("mName");
 
             } catch (JSONException e) {
                 e.printStackTrace();

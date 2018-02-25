@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory>
+        <!--User Settings-->
+        android:title="@string/dialog_based_preferences">
+
+        <!--todo-->
+        <!--android:summary="@string/firstname_response"-->
+        <!-- First Name-->
+        <EditTextPreference
+            android:key="firstname"
+            android:title="First Name"
+            android:summary="@string/firstname_default"
+            android:dialogTitle="@string/firstname_dialog" />
+
+        <!-- Last Name-->
+        <EditTextPreference
+            android:key="lastname"
+            android:title="Last Name"
+            android:summary="@string/lastname_default"
+            android:dialogTitle="@string/lastname_dialog" />
+
+        <!--Sex-->
+        <ListPreference
+            android:key="sex"
+            android:title="I Am: "
+            android:summary="@string/sex_default"
+            android:entries="@array/sex"
+            android:entryValues="@array/sex"
+            android:dialogTitle="@string/sex" />
+
+        <!--Sex Preference-->
+        <ListPreference
+            android:key="sex_preference"
+            android:title="Show Me:"
+            android:summary="@string/sex_preference_default"
+            android:entries="@array/sex_preference"
+            android:entryValues="@array/sex_preference"
+            android:dialogTitle="@string/sex_preference" />
+
+    </PreferenceCategory>
+    <!--<resources>-->
+
+        <!--<string-array name="sex">-->
+            <!--<item>Male</item>-->
+            <!--<item>Female</item>-->
+        <!--</string-array>-->
+
+        <!--<string-array name="sex_preference">-->
+            <!--<item>Men</item>-->
+            <!--<item>Women</item>-->
+        <!--</string-array>-->
+    <!--</resources>-->
+
+</PreferenceScreen>
