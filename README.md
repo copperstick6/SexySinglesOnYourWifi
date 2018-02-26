@@ -3,7 +3,8 @@
 <p align="center">
   <img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/609/045/datas/gallery.jpg">
 </p>
-## Follow Your Hotspot
+
+## ❤ Follow Your Hotspot ❤ 
 
 ## Inspiration
 You just found you match with SexySinglesOnYourWifi! We are a social engagement mobile platform that enables users to find matches in his or her wifi network. We wanted to take a unique approach to the dating app market and wondered if two people share a wifi connection could they possibly share an even deeper connection? Sexy Singles on Your Wifi finds those missed opportunities in your coffee shops, libraries, and airports based off of your profile and preferences. Our network is YOUR [wireless] network and after using our app you may realize how much more you share with your matches besides wifi.
